@@ -1,0 +1,19 @@
+.DS_Store
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# Application artifacts
+node_modules/
+.venv/
+__pycache__/
+*.py[cod]
+*.log
+
+# Local database storage
+postgres-data/
+
+# Editor and operating system artifacts
+.idea/
