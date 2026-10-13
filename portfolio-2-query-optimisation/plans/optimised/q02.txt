@@ -1,0 +1,43 @@
+QUERY PLAN                                                              
+--------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=5.99..6.00 rows=4 width=92) (actual time=0.081..0.084 rows=5 loops=1)
+   Buffers: shared hit=5
+   InitPlan 1 (returns $0)
+     ->  Seq Scan on accounts  (cost=0.00..1.12 rows=1 width=8) (actual time=0.005..0.006 rows=1 loops=1)
+           Filter: ((account_number)::text = '1000000001'::text)
+           Rows Removed by Filter: 9
+           Buffers: shared hit=1
+   InitPlan 2 (returns $1)
+     ->  Seq Scan on accounts accounts_1  (cost=0.00..1.12 rows=1 width=8) (actual time=0.003..0.004 rows=1 loops=1)
+           Filter: ((account_number)::text = '1000000001'::text)
+           Rows Removed by Filter: 9
+           Buffers: shared hit=1
+   ->  Sort  (cost=3.74..3.75 rows=4 width=92) (actual time=0.080..0.082 rows=5 loops=1)
+         Sort Key: t.created_at DESC
+         Sort Method: quicksort  Memory: 25kB
+         Buffers: shared hit=5
+         ->  Hash Left Join  (cost=2.45..3.70 rows=4 width=92) (actual time=0.061..0.069 rows=5 loops=1)
+               Hash Cond: (t.destination_account_id = da.account_id)
+               Buffers: shared hit=5
+               ->  Hash Left Join  (cost=1.23..2.46 rows=4 width=89) (actual time=0.039..0.045 rows=5 loops=1)
+                     Hash Cond: (t.source_account_id = sa.account_id)
+                     Buffers: shared hit=4
+                     ->  Seq Scan on transactions t  (cost=0.00..1.23 rows=4 width=86) (actual time=0.019..0.023 rows=5 loops=1)
+                           Filter: ((source_account_id = $0) OR (destination_account_id = $1))
+                           Rows Removed by Filter: 10
+                           Buffers: shared hit=3
+                     ->  Hash  (cost=1.10..1.10 rows=10 width=19) (actual time=0.010..0.010 rows=10 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                           Buffers: shared hit=1
+                           ->  Seq Scan on accounts sa  (cost=0.00..1.10 rows=10 width=19) (actual time=0.002..0.004 rows=10 loops=1)
+                                 Buffers: shared hit=1
+               ->  Hash  (cost=1.10..1.10 rows=10 width=19) (actual time=0.009..0.010 rows=10 loops=1)
+                     Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                     Buffers: shared hit=1
+                     ->  Seq Scan on accounts da  (cost=0.00..1.10 rows=10 width=19) (actual time=0.003..0.004 rows=10 loops=1)
+                           Buffers: shared hit=1
+ Planning:
+   Buffers: shared hit=53
+ Planning Time: 0.550 ms
+ Execution Time: 0.125 ms
+(40 rows)

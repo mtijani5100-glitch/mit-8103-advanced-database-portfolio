@@ -1,0 +1,47 @@
+QUERY PLAN                                                                 
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=6.00..6.01 rows=3 width=95) (actual time=0.075..0.078 rows=2 loops=1)
+   Sort Key: t.amount DESC, t.created_at DESC
+   Sort Method: quicksort  Memory: 25kB
+   Buffers: shared hit=5
+   ->  Hash Left Join  (cost=4.72..5.98 rows=3 width=95) (actual time=0.064..0.072 rows=2 loops=1)
+         Hash Cond: (da.customer_id = dc.customer_id)
+         Buffers: shared hit=5
+         ->  Hash Join  (cost=3.59..4.83 rows=3 width=89) (actual time=0.051..0.058 rows=2 loops=1)
+               Hash Cond: (t.destination_account_id = da.account_id)
+               Buffers: shared hit=4
+               ->  Hash Join  (cost=2.36..3.60 rows=3 width=78) (actual time=0.032..0.038 rows=2 loops=1)
+                     Hash Cond: (sa.customer_id = sc.customer_id)
+                     Buffers: shared hit=3
+                     ->  Hash Join  (cost=1.23..2.46 rows=3 width=72) (actual time=0.024..0.029 rows=2 loops=1)
+                           Hash Cond: (t.source_account_id = sa.account_id)
+                           Buffers: shared hit=2
+                           ->  Seq Scan on transactions t  (cost=0.00..1.23 rows=3 width=61) (actual time=0.004..0.007 rows=2 loops=1)
+                                 Filter: ((amount >= 50000.00) AND (transaction_type = 'TRANSFER'::text))
+                                 Rows Removed by Filter: 13
+                                 Buffers: shared hit=1
+                           ->  Hash  (cost=1.10..1.10 rows=10 width=27) (actual time=0.010..0.010 rows=10 loops=1)
+                                 Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                                 Buffers: shared hit=1
+                                 ->  Seq Scan on accounts sa  (cost=0.00..1.10 rows=10 width=27) (actual time=0.003..0.004 rows=10 loops=1)
+                                       Buffers: shared hit=1
+                     ->  Hash  (cost=1.06..1.06 rows=6 width=22) (actual time=0.005..0.005 rows=6 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                           Buffers: shared hit=1
+                           ->  Seq Scan on customers sc  (cost=0.00..1.06 rows=6 width=22) (actual time=0.002..0.003 rows=6 loops=1)
+                                 Buffers: shared hit=1
+               ->  Hash  (cost=1.10..1.10 rows=10 width=27) (actual time=0.015..0.015 rows=10 loops=1)
+                     Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                     Buffers: shared hit=1
+                     ->  Seq Scan on accounts da  (cost=0.00..1.10 rows=10 width=27) (actual time=0.006..0.008 rows=10 loops=1)
+                           Buffers: shared hit=1
+         ->  Hash  (cost=1.06..1.06 rows=6 width=22) (actual time=0.007..0.007 rows=6 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               Buffers: shared hit=1
+               ->  Seq Scan on customers dc  (cost=0.00..1.06 rows=6 width=22) (actual time=0.002..0.003 rows=6 loops=1)
+                     Buffers: shared hit=1
+ Planning:
+   Buffers: shared hit=27
+ Planning Time: 0.560 ms
+ Execution Time: 0.110 ms
+(44 rows)

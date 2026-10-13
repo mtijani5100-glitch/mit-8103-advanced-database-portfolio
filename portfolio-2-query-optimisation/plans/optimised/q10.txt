@@ -1,0 +1,50 @@
+QUERY PLAN                                                                 
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=6.34..6.36 rows=6 width=162) (actual time=0.125..0.127 rows=7 loops=1)
+   Sort Key: a.account_number, t.created_at DESC
+   Sort Method: quicksort  Memory: 25kB
+   Buffers: shared hit=4
+   ->  Hash Left Join  (cost=3.42..6.27 rows=6 width=162) (actual time=0.089..0.111 rows=7 loops=1)
+         Hash Cond: ((t.transaction_id = ls.transaction_id) AND (a.account_id = ls.account_id))
+         Buffers: shared hit=4
+         ->  Nested Loop  (cost=1.09..3.90 rows=6 width=106) (actual time=0.022..0.040 rows=7 loops=1)
+               Join Filter: ((t.source_account_id = a.account_id) OR (t.destination_account_id = a.account_id))
+               Rows Removed by Join Filter: 23
+               Buffers: shared hit=3
+               ->  Seq Scan on transactions t  (cost=0.00..1.15 rows=15 width=69) (actual time=0.005..0.006 rows=15 loops=1)
+                     Buffers: shared hit=1
+               ->  Materialize  (cost=1.09..2.23 rows=2 width=53) (actual time=0.001..0.001 rows=2 loops=15)
+                     Buffers: shared hit=2
+                     ->  Hash Join  (cost=1.09..2.22 rows=2 width=53) (actual time=0.013..0.016 rows=2 loops=1)
+                           Hash Cond: (a.customer_id = c.customer_id)
+                           Buffers: shared hit=2
+                           ->  Seq Scan on accounts a  (cost=0.00..1.10 rows=10 width=40) (actual time=0.003..0.004 rows=10 loops=1)
+                                 Buffers: shared hit=1
+                           ->  Hash  (cost=1.07..1.07 rows=1 width=29) (actual time=0.006..0.006 rows=1 loops=1)
+                                 Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                                 Buffers: shared hit=1
+                                 ->  Seq Scan on customers c  (cost=0.00..1.07 rows=1 width=29) (actual time=0.003..0.004 rows=1 loops=1)
+                                       Filter: (full_name = 'Amaka Okonkwo'::text)
+                                       Rows Removed by Filter: 5
+                                       Buffers: shared hit=1
+         ->  Hash  (cost=2.12..2.12 rows=14 width=88) (actual time=0.063..0.064 rows=28 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 10kB
+               Buffers: shared hit=1
+               ->  Subquery Scan on ls  (cost=1.77..2.12 rows=14 width=88) (actual time=0.032..0.049 rows=28 loops=1)
+                     Buffers: shared hit=1
+                     ->  HashAggregate  (cost=1.77..1.98 rows=14 width=88) (actual time=0.031..0.044 rows=28 loops=1)
+                           Group Key: le.transaction_id, le.account_id
+                           Batches: 1  Memory Usage: 48kB
+                           Buffers: shared hit=1
+                           ->  Seq Scan on ledger_entries le  (cost=0.00..1.28 rows=28 width=27) (actual time=0.003..0.005 rows=28 loops=1)
+                                 Buffers: shared hit=1
+ Planning:
+   Buffers: shared hit=14
+ Planning Time: 0.482 ms
+ Execution Time: 0.167 ms
+(42 rows)
+
+
+==========================================
+OPTIMISED CAPTURE COMPLETE
+==========================================

@@ -1,0 +1,23 @@
+QUERY PLAN                                                       
+-----------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=2.23..2.24 rows=2 width=52) (actual time=0.050..0.054 rows=2 loops=1)
+   Sort Key: a.account_number
+   Sort Method: quicksort  Memory: 25kB
+   Buffers: shared hit=2
+   ->  Hash Join  (cost=1.09..2.22 rows=2 width=52) (actual time=0.031..0.036 rows=2 loops=1)
+         Hash Cond: (a.customer_id = c.customer_id)
+         Buffers: shared hit=2
+         ->  Seq Scan on accounts a  (cost=0.00..1.10 rows=10 width=60) (actual time=0.007..0.008 rows=10 loops=1)
+               Buffers: shared hit=1
+         ->  Hash  (cost=1.07..1.07 rows=1 width=8) (actual time=0.013..0.013 rows=1 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               Buffers: shared hit=1
+               ->  Seq Scan on customers c  (cost=0.00..1.07 rows=1 width=8) (actual time=0.005..0.007 rows=1 loops=1)
+                     Filter: (full_name = 'Amaka Okonkwo'::text)
+                     Rows Removed by Filter: 5
+                     Buffers: shared hit=1
+ Planning:
+   Buffers: shared hit=99
+ Planning Time: 0.366 ms
+ Execution Time: 0.089 ms
+(20 rows)

@@ -1,0 +1,19 @@
+QUERY PLAN                                                           
+-------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=3.03..3.04 rows=1 width=136) (actual time=0.046..0.047 rows=1 loops=1)
+   Buffers: shared hit=2
+   ->  Hash Left Join  (cost=1.34..2.67 rows=14 width=21) (actual time=0.016..0.027 rows=14 loops=1)
+         Hash Cond: (t.transaction_id = rev.reversal_of_transaction_id)
+         Buffers: shared hit=2
+         ->  Seq Scan on transactions t  (cost=0.00..1.30 rows=14 width=21) (actual time=0.005..0.012 rows=14 loops=1)
+               Filter: ((status = 'POSTED'::text) AND (created_at >= (now() - '90 days'::interval)))
+               Rows Removed by Filter: 1
+               Buffers: shared hit=1
+         ->  Hash  (cost=1.15..1.15 rows=15 width=16) (actual time=0.008..0.008 rows=1 loops=1)
+               Buckets: 1024  Batches: 1  Memory Usage: 9kB
+               Buffers: shared hit=1
+               ->  Seq Scan on transactions rev  (cost=0.00..1.15 rows=15 width=16) (actual time=0.002..0.005 rows=15 loops=1)
+                     Buffers: shared hit=1
+ Planning Time: 0.200 ms
+ Execution Time: 0.067 ms
+(16 rows)

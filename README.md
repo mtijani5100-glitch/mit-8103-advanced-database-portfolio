@@ -13,9 +13,9 @@ services case study.
 
 ## Portfolio Activities
 
-1. Database Design and Modelling
-2. Query Processing and Optimisation
-3. Transactions and Concurrency
+1. [Database Design and Modelling](./portfolio-1-database-design/case-study.md) (Completed)
+2. [Query Processing and Optimisation](./portfolio-2-query-optimisation/README.md) (Completed)
+3. Transactions and Concurrency (In Progress)
 4. NoSQL and Advanced Data Models
 5. Distributed and Cloud Databases
 
@@ -39,4 +39,6 @@ will be documented where applicable.
 
 ## Status
 
-Initial case-study definition and business rules.
+- **Portfolio 1 (Database Design and Modelling):** Completed
+- **Portfolio 2 (Query Processing and Optimisation):** Completed
+- **Portfolio 3 (Transactions and Concurrency):** Ready for implementation
