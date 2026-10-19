@@ -28,20 +28,20 @@ portfolio-2-query-optimisation/
 ├── README.md                          # This portfolio guide and documentation
 ├── performance-results.md             # Detailed benchmark metrics, plan comparisons, and CBO analysis
 ├── queries/                           # 10 production-grade SQL query implementations
-│   ├── 01_customer_accounts.sql       # Q01: Customer account lookup
-│   ├── 02_account_tx_history.sql      # Q02: Paginated account transaction history
-│   ├── 03_transaction_lookup.sql      # Q03: Transaction lookup by unique reference
-│   ├── 04_operations_failures.sql     # Q04: Operations monitoring for pending/failed tx
-│   ├── 05_daily_totals.sql            # Q05: Daily transaction totals by type and status
-│   ├── 06_high_value_transfers.sql    # Q06: High-value transfers AML threshold filter
-│   ├── 07_balance_reconciliation.sql  # Q07: Balance reconciliation (cached vs ledger-derived)
-│   ├── 08_unbalanced_journals.sql     # Q08: Unbalanced or missing journal audit check
-│   ├── 09_net_movement_reversals.sql  # Q09: Net movement adjusted for reversal transactions
-│   └── 10_full_join_report.sql        # Q10: Fanout-safe reporting across customers, accounts, tx, ledger
+│   ├── Tijani_Mubarak_301915100_P2_Q01_CustomerAccounts.sql
+│   ├── Tijani_Mubarak_301915100_P2_Q02_AccountTxHistory.sql
+│   ├── Tijani_Mubarak_301915100_P2_Q03_TransactionLookup.sql
+│   ├── Tijani_Mubarak_301915100_P2_Q04_OperationsFailures.sql
+│   ├── Tijani_Mubarak_301915100_P2_Q05_DailyTotals.sql
+│   ├── Tijani_Mubarak_301915100_P2_Q06_HighValueTransfers.sql
+│   ├── Tijani_Mubarak_301915100_P2_Q07_BalanceReconciliation.sql
+│   ├── Tijani_Mubarak_301915100_P2_Q08_UnbalancedJournals.sql
+│   ├── Tijani_Mubarak_301915100_P2_Q09_NetMovementReversals.sql
+│   └── Tijani_Mubarak_301915100_P2_Q10_FullJoinReport.sql
 ├── sql/                               # Executable orchestration scripts
-│   ├── 01_baseline_plans.sql          # Captures baseline EXPLAIN ANALYZE for all 10 queries
-│   ├── 02_create_indexes.sql          # Applies 3 targeted optimisation indexes + ANALYZE
-│   └── 03_optimised_plans.sql         # Captures post-optimisation EXPLAIN ANALYZE for all 10 queries
+│   ├── Tijani_Mubarak_301915100_P2_BaselinePlans.sql
+│   ├── Tijani_Mubarak_301915100_P2_CreateIndexes.sql
+│   └── Tijani_Mubarak_301915100_P2_OptimisedPlans.sql
 ├── plans/                             # Raw PostgreSQL execution plan outputs
 │   ├── baseline/                      # Baseline execution plans (before new indexes)
 │   │   ├── all_baseline_plans.txt     # Consolidated baseline output
@@ -58,16 +58,16 @@ portfolio-2-query-optimisation/
 
 | Query ID | File | Business / Banking Use Case | Plan Characteristics |
 |---|---|---|---|
-| **Q01** | `01_customer_accounts.sql` | Retail onboarding & dashboard: fetch all accounts for a customer | Foreign key join (`customers` $\to$ `accounts`) |
-| **Q02** | `02_account_tx_history.sql` | Mobile app statement: paginated bilateral ledger history | Bi-directional filter (`source` OR `destination`), `ORDER BY created_at DESC LIMIT 10` |
-| **Q03** | `03_transaction_lookup.sql` | Payment support / receipt generation by transaction reference | Multi-table LEFT JOIN (source/dest accounts & customers, reversal linkage) |
-| **Q04** | `04_operations_failures.sql` | Fraud & operations monitoring: pending or failed transactions | Selective operational filter (`status IN ('PENDING','FAILED','SUBMITTED')`) |
-| **Q05** | `05_daily_totals.sql` | Daily clearing & treasury report: aggregate volume and value | `GROUP BY transaction_type, status` with `COUNT` and `SUM` |
-| **Q06** | `06_high_value_transfers.sql` | AML/CFT compliance: transactions exceeding reporting threshold | Filter on `amount >= 50,000` and `status = 'POSTED'` |
-| **Q07** | `07_balance_reconciliation.sql` | Automated End-of-Day integrity check: cached vs ledger balance | Aggregated double-entry debit/credit sum vs `accounts.available_balance` |
-| **Q08** | `08_unbalanced_journals.sql` | Core accounting invariant audit: detect unbalanced transactions | `HAVING SUM(debit) <> SUM(credit)` or `COUNT(entries) = 0` |
-| **Q09** | `09_net_movement_reversals.sql` | Financial movement reporting: net flow without double-counting reversals | Anti-join / exclusion filter on `reversal_of_transaction_id` |
-| **Q10** | `10_full_join_report.sql` | Multi-dimensional audit report without Cartesian product fan-out | Aggregated join structure preserving exact transaction amounts |
+| **Q01** | `Tijani_Mubarak_301915100_P2_Q01_CustomerAccounts.sql` | Retail onboarding & dashboard: fetch all accounts for a customer | Foreign key join (`customers` $\to$ `accounts`) |
+| **Q02** | `Tijani_Mubarak_301915100_P2_Q02_AccountTxHistory.sql` | Mobile app statement: paginated bilateral ledger history | Bi-directional filter (`source` OR `destination`), `ORDER BY created_at DESC LIMIT 10` |
+| **Q03** | `Tijani_Mubarak_301915100_P2_Q03_TransactionLookup.sql` | Payment support / receipt generation by transaction reference | Multi-table LEFT JOIN (source/dest accounts & customers, reversal linkage) |
+| **Q04** | `Tijani_Mubarak_301915100_P2_Q04_OperationsFailures.sql` | Fraud & operations monitoring: pending or failed transactions | Selective operational filter (`status IN ('PENDING','FAILED','SUBMITTED')`) |
+| **Q05** | `Tijani_Mubarak_301915100_P2_Q05_DailyTotals.sql` | Daily clearing & treasury report: aggregate volume and value | `GROUP BY transaction_type, status` with `COUNT` and `SUM` |
+| **Q06** | `Tijani_Mubarak_301915100_P2_Q06_HighValueTransfers.sql` | AML/CFT compliance: transactions exceeding reporting threshold | Filter on `amount >= 50,000` and `status = 'POSTED'` |
+| **Q07** | `Tijani_Mubarak_301915100_P2_Q07_BalanceReconciliation.sql` | Automated End-of-Day integrity check: cached vs ledger balance | Aggregated double-entry debit/credit sum vs `accounts.available_balance` |
+| **Q08** | `Tijani_Mubarak_301915100_P2_Q08_UnbalancedJournals.sql` | Core accounting invariant audit: detect unbalanced transactions | `HAVING SUM(debit) <> SUM(credit)` or `COUNT(entries) = 0` |
+| **Q09** | `Tijani_Mubarak_301915100_P2_Q09_NetMovementReversals.sql` | Financial movement reporting: net flow without double-counting reversals | Anti-join / exclusion filter on `reversal_of_transaction_id` |
+| **Q10** | `Tijani_Mubarak_301915100_P2_Q10_FullJoinReport.sql` | Multi-dimensional audit report without Cartesian product fan-out | Aggregated join structure preserving exact transaction amounts |
 
 ---
 
@@ -78,33 +78,33 @@ To run and verify the entire Portfolio 2 suite against PostgreSQL:
 ### Prerequisites
 1. Ensure PostgreSQL is active and the `ledgerspring` database exists with Portfolio 1 schema and seed data loaded:
    ```bash
-   psql -d ledgerspring -f portfolio-1-database-design/sql/01_create_schema.sql
-   psql -d ledgerspring -f portfolio-1-database-design/sql/02_seed_data.sql
+   psql -d ledgerspring -f portfolio-1-database-design/sql/Tijani_Mubarak_301915100_P1_CreateSchema.sql
+   psql -d ledgerspring -f portfolio-1-database-design/sql/Tijani_Mubarak_301915100_P1_SeedData.sql
    ```
 
 ### Step 1: Capture Baseline Plans
 Capture raw EXPLAIN ANALYZE plans prior to creating the new indexes:
 ```bash
-psql -d ledgerspring -f portfolio-2-query-optimisation/sql/01_baseline_plans.sql > portfolio-2-query-optimisation/plans/baseline/all_baseline_plans.txt
+psql -d ledgerspring -f portfolio-2-query-optimisation/sql/Tijani_Mubarak_301915100_P2_BaselinePlans.sql > portfolio-2-query-optimisation/plans/baseline/all_baseline_plans.txt
 ```
 
 ### Step 2: Apply Targeted Optimisation Indexes
 Execute the index migration script:
 ```bash
-psql -d ledgerspring -f portfolio-2-query-optimisation/sql/02_create_indexes.sql
+psql -d ledgerspring -f portfolio-2-query-optimisation/sql/Tijani_Mubarak_301915100_P2_CreateIndexes.sql
 ```
 *Creates `idx_tx_type_amount` (partial composite), `idx_ledger_account_side` (composite), and `idx_tx_dest_account` (partial).*
 
 ### Step 3: Capture Optimised Plans
 Capture post-indexing EXPLAIN ANALYZE plans:
 ```bash
-psql -d ledgerspring -f portfolio-2-query-optimisation/sql/03_optimised_plans.sql > portfolio-2-query-optimisation/plans/optimised/all_optimised_plans.txt
+psql -d ledgerspring -f portfolio-2-query-optimisation/sql/Tijani_Mubarak_301915100_P2_OptimisedPlans.sql > portfolio-2-query-optimisation/plans/optimised/all_optimised_plans.txt
 ```
 
 ### Step 4: Run Individual Queries
 Any individual query can be directly executed using `psql`:
 ```bash
-psql -d ledgerspring -f portfolio-2-query-optimisation/queries/07_balance_reconciliation.sql
+psql -d ledgerspring -f portfolio-2-query-optimisation/queries/Tijani_Mubarak_301915100_P2_Q07_BalanceReconciliation.sql
 ```
 
 ---

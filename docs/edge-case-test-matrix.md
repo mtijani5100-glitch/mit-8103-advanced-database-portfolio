@@ -2,8 +2,9 @@
 
 > **Course:** MIT 8103 Advanced Database Systems  
 > **Component:** Portfolio 1 — Database Design and Integrity Enforcement  
-> **Test Script Reference:** [`portfolio-1-database-design/sql/03_constraint_tests.sql`](file:///Users/tijanimubarak/Developer/mit-8103-advanced-database-portfolio/portfolio-1-database-design/sql/03_constraint_tests.sql)  
-> **Schema Reference:** [`portfolio-1-database-design/sql/01_create_schema.sql`](file:///Users/tijanimubarak/Developer/mit-8103-advanced-database-portfolio/portfolio-1-database-design/sql/01_create_schema.sql)
+> **Test Script Reference:** [`portfolio-1-database-design/sql/Tijani_Mubarak_301915100_P1_ConstraintTests.sql`](file:///Users/tijanimubarak/Developer/mit-8103-advanced-database-portfolio/portfolio-1-database-design/sql/Tijani_Mubarak_301915100_P1_ConstraintTests.sql)  
+> **Schema Reference:** [`portfolio-1-database-design/sql/Tijani_Mubarak_301915100_P1_CreateSchema.sql`](file:///Users/tijanimubarak/Developer/mit-8103-advanced-database-portfolio/portfolio-1-database-design/sql/Tijani_Mubarak_301915100_P1_CreateSchema.sql)
+
 
 ---
 

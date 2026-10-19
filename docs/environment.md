@@ -46,7 +46,7 @@ sw_vers
 | Category | Tool / Version | Purpose |
 |---|---|---|
 | **Version Control** | Git 2.39+ / GitHub (`mtijani5100-glitch/mit-8103-advanced-database-portfolio`) | Progressive portfolio tracking and commits |
-| **ER Diagramming** | diagrams.net (draw.io) / Mermaid.js | Visual relational modelling (`diagrams/erd-v2.drawio`) |
+| **ER Diagramming** | diagrams.net (draw.io) / Mermaid.js | Visual relational modelling (`diagrams/Tijani_Mubarak_301915100_ERD_v2.drawio`) |
 | **NoSQL Database (Planned - Portfolio 4)** | MongoDB Community Edition 7.x / `mongosh` | Operational event projections & audit document storage |
 | **Containerisation (Planned - Portfolio 5)** | Docker Desktop / Docker Compose | Local reproducible distributed topology demo |
 

@@ -52,6 +52,7 @@ The relational schema implements 6 core entities in PostgreSQL:
 
 - **Full Data Dictionary & Mermaid Schema:** [evidence/relational-schema.md](file:///Users/tijanimubarak/Developer/mit-8103-advanced-database-portfolio/portfolio-1-database-design/evidence/relational-schema.md)
 - **Normalisation Analysis (1NF to BCNF):** [evidence/normalisation.md](file:///Users/tijanimubarak/Developer/mit-8103-advanced-database-portfolio/portfolio-1-database-design/evidence/normalisation.md)
-- **Executable DDL:** [sql/01_create_schema.sql](file:///Users/tijanimubarak/Developer/mit-8103-advanced-database-portfolio/portfolio-1-database-design/sql/01_create_schema.sql)
-- **Synthetic Seed Data:** [sql/02_seed_data.sql](file:///Users/tijanimubarak/Developer/mit-8103-advanced-database-portfolio/portfolio-1-database-design/sql/02_seed_data.sql)
-- **Constraint Test Suite:** [sql/03_constraint_tests.sql](file:///Users/tijanimubarak/Developer/mit-8103-advanced-database-portfolio/portfolio-1-database-design/sql/03_constraint_tests.sql)
+- **Executable DDL:** [sql/Tijani_Mubarak_301915100_P1_CreateSchema.sql](file:///Users/tijanimubarak/Developer/mit-8103-advanced-database-portfolio/portfolio-1-database-design/sql/Tijani_Mubarak_301915100_P1_CreateSchema.sql)
+- **Synthetic Seed Data:** [sql/Tijani_Mubarak_301915100_P1_SeedData.sql](file:///Users/tijanimubarak/Developer/mit-8103-advanced-database-portfolio/portfolio-1-database-design/sql/Tijani_Mubarak_301915100_P1_SeedData.sql)
+- **Constraint Test Suite:** [sql/Tijani_Mubarak_301915100_P1_ConstraintTests.sql](file:///Users/tijanimubarak/Developer/mit-8103-advanced-database-portfolio/portfolio-1-database-design/sql/Tijani_Mubarak_301915100_P1_ConstraintTests.sql)
+

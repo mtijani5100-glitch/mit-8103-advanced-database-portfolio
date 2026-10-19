@@ -12,13 +12,13 @@
 createdb lsdb_dev
 
 # 2. Build the schema (all six tables + indexes)
-psql -d lsdb_dev -f sql/01_create_schema.sql
+psql -d lsdb_dev -f sql/Tijani_Mubarak_301915100_P1_CreateSchema.sql
 
 # 3. Load synthetic seed data
-psql -d lsdb_dev -f sql/02_seed_data.sql
+psql -d lsdb_dev -f sql/Tijani_Mubarak_301915100_P1_SeedData.sql
 
 # 4. Run constraint tests (all should PASS)
-psql -d lsdb_dev -f sql/03_constraint_tests.sql
+psql -d lsdb_dev -f sql/Tijani_Mubarak_301915100_P1_ConstraintTests.sql
 ```
 
 ---
@@ -27,14 +27,14 @@ psql -d lsdb_dev -f sql/03_constraint_tests.sql
 
 | File | Purpose |
 |---|---|
-| [`sql/01_create_schema.sql`](sql/01_create_schema.sql) | DDL for all six core tables, constraints, and indexes |
-| [`sql/02_seed_data.sql`](sql/02_seed_data.sql) | Synthetic data: 6 customers, 10 accounts, 7 transactions, ledger entries |
-| [`sql/03_constraint_tests.sql`](sql/03_constraint_tests.sql) | 11 named tests demonstrating database rule enforcement |
+| [`sql/Tijani_Mubarak_301915100_P1_CreateSchema.sql`](sql/Tijani_Mubarak_301915100_P1_CreateSchema.sql) | DDL for all six core tables, constraints, and indexes |
+| [`sql/Tijani_Mubarak_301915100_P1_SeedData.sql`](sql/Tijani_Mubarak_301915100_P1_SeedData.sql) | Synthetic data: 6 customers, 10 accounts, 7 transactions, ledger entries |
+| [`sql/Tijani_Mubarak_301915100_P1_ConstraintTests.sql`](sql/Tijani_Mubarak_301915100_P1_ConstraintTests.sql) | 11 named tests demonstrating database rule enforcement |
 | [`relational-schema.md`](relational-schema.md) | Full data dictionary with column types, keys, and FK map |
 | [`normalisation.md`](normalisation.md) | 1NF → BCNF analysis tied to the actual schema |
 | [`../docs/decisions/case-study.md`](../docs/decisions/case-study.md) | Case study description |
 | [`../docs/business-rules.md`](../docs/business-rules.md) | 29 numbered business rules |
-| [`../diagrams/erd-v1.drawio`](../diagrams/erd-v1.drawio) | Editable ERD source (diagrams.net) |
+| [`../diagrams/Tijani_Mubarak_301915100_ERD_v2.drawio`](../diagrams/Tijani_Mubarak_301915100_ERD_v2.drawio) | Editable ERD source (diagrams.net) |
 | [`evidence/`](evidence/) | Screenshots and query outputs |
 
 ---
