@@ -17,4 +17,3 @@ CREATE INDEX IF NOT EXISTS idx_tx_dest_account
 ANALYZE transactions;
 ANALYZE ledger_entries;
 
-\echo 'Optimisation indexes created successfully.'

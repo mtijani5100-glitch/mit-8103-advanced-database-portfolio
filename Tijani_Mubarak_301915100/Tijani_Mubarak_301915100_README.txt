@@ -45,6 +45,10 @@ PORTFOLIO 1: DATABASE DESIGN AND MODELLING
    - Tijani_Mubarak_301915100_P1_Evidence_04_LedgerEntries.png
    - Tijani_Mubarak_301915100_P1_Evidence_05_IdempotencyKeys.png
    - Tijani_Mubarak_301915100_P1_Evidence_06_AuditLogs.png
+   - Tijani_Mubarak_301915100_P1_Evidence_07_Reset.png: pgAdmin execution output for database reset script.
+   - Tijani_Mubarak_301915100_P1_Evidence_08_CreateSchema.png: pgAdmin execution output for schema creation DDL.
+   - Tijani_Mubarak_301915100_P1_Evidence_09_SeedData.png: pgAdmin execution output for Nigerian banking seed data.
+   - Tijani_Mubarak_301915100_P1_Evidence_10_Constraints.png: pgAdmin execution output showing all 11 constraint tests PASS.
 
 ================================================================================
 PORTFOLIO 2: QUERY PROCESSING AND OPTIMISATION

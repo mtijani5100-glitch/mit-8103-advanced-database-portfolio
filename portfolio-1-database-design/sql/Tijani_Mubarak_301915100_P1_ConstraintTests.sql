@@ -1,7 +1,6 @@
 -- Integrity constraint tests for LedgerSpring Digital Bank (LSDB)
 
 -- Test 1: Unique account number enforcement
-\echo 'Running Test 1: Duplicate account number rejection'
 DO $$
 DECLARE v_cid BIGINT;
 BEGIN
@@ -17,7 +16,6 @@ BEGIN
 END $$;
 
 -- Test 2: Foreign key violation on non-existent customer
-\echo 'Running Test 2: Orphan customer_id foreign key rejection'
 DO $$
 BEGIN
     BEGIN
@@ -31,7 +29,6 @@ BEGIN
 END $$;
 
 -- Test 3: CUSTOMER account without customer_id
-\echo 'Running Test 3: Customer account without customer_id rejection'
 DO $$
 BEGIN
     BEGIN
@@ -45,7 +42,6 @@ BEGIN
 END $$;
 
 -- Test 4: SETTLEMENT account with customer_id
-\echo 'Running Test 4: Settlement account with customer_id rejection'
 DO $$
 DECLARE v_cid BIGINT;
 BEGIN
@@ -61,7 +57,6 @@ BEGIN
 END $$;
 
 -- Test 5: Zero-amount transaction
-\echo 'Running Test 5: Zero amount transaction rejection'
 DO $$
 DECLARE
     v_src BIGINT;
@@ -81,7 +76,6 @@ BEGIN
 END $$;
 
 -- Test 6: Same source and destination account transfer
-\echo 'Running Test 6: Same-account transfer rejection'
 DO $$
 DECLARE v_acct BIGINT;
 BEGIN
@@ -98,7 +92,6 @@ BEGIN
 END $$;
 
 -- Test 7: Duplicate transaction reference
-\echo 'Running Test 7: Duplicate transaction_ref rejection'
 DO $$
 DECLARE
     v_src BIGINT;
@@ -118,7 +111,6 @@ BEGIN
 END $$;
 
 -- Test 8: Duplicate reversal attempt on the same original transaction
-\echo 'Running Test 8: Double-reversal rejection'
 DO $$
 DECLARE
     v_orig_id    BIGINT;
@@ -142,7 +134,6 @@ BEGIN
 END $$;
 
 -- Test 9: Zero-amount ledger entry
-\echo 'Running Test 9: Zero-amount ledger entry rejection'
 DO $$
 DECLARE
     v_tx_id BIGINT;
@@ -161,7 +152,6 @@ BEGIN
 END $$;
 
 -- Test 10: Duplicate idempotency key within same scope
-\echo 'Running Test 10: Duplicate idempotency scope/key rejection'
 DO $$
 BEGIN
     BEGIN
@@ -174,7 +164,6 @@ BEGIN
 END $$;
 
 -- Test 11: Valid reversal creation and rollback
-\echo 'Running Test 11: Valid reversal creation and rollback'
 DO $$
 DECLARE
     v_orig_id BIGINT;
@@ -206,7 +195,6 @@ EXCEPTION
 END $$;
 
 -- Verification: table row counts
-\echo 'Database summary after tests:'
 SELECT 'customers' AS table_name, COUNT(*) AS row_count FROM customers
 UNION ALL
 SELECT 'accounts', COUNT(*) FROM accounts

@@ -28,7 +28,7 @@ psql -d lsdb_dev -f sql/Tijani_Mubarak_301915100_P1_ConstraintTests.sql
 | File | Purpose |
 |---|---|
 | [`sql/Tijani_Mubarak_301915100_P1_CreateSchema.sql`](sql/Tijani_Mubarak_301915100_P1_CreateSchema.sql) | DDL for all six core tables, constraints, and indexes |
-| [`sql/Tijani_Mubarak_301915100_P1_SeedData.sql`](sql/Tijani_Mubarak_301915100_P1_SeedData.sql) | Synthetic data: 6 customers, 10 accounts, 7 transactions, ledger entries |
+| [`sql/Tijani_Mubarak_301915100_P1_SeedData.sql`](sql/Tijani_Mubarak_301915100_P1_SeedData.sql) | Synthetic Nigerian banking data: 12 customers, 18 accounts, deposits, transfers, and ledger entries |
 | [`sql/Tijani_Mubarak_301915100_P1_ConstraintTests.sql`](sql/Tijani_Mubarak_301915100_P1_ConstraintTests.sql) | 11 named tests demonstrating database rule enforcement |
 | [`relational-schema.md`](relational-schema.md) | Full data dictionary with column types, keys, and FK map |
 | [`normalisation.md`](normalisation.md) | 1NF → BCNF analysis tied to the actual schema |
