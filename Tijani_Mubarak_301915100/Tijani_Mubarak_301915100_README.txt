@@ -13,6 +13,7 @@ SUBMISSION OVERVIEW
 This submission folder contains the deliverables and empirical evidence for:
 - Portfolio 1: Database Design and Modelling (7 Marks)
 - Portfolio 2: Query Processing and Optimisation (7 Marks)
+- Portfolio 3: Transactions and Concurrency (7 Marks)
 
 All files follow the required naming format: Surname_Firstname_StudentID_DocumentType
 No spaces are used in any file or folder names.
@@ -88,3 +89,48 @@ PORTFOLIO 2: QUERY PROCESSING AND OPTIMISATION
    - Tijani_Mubarak_301915100_P2_Evidence_08_Q08_Plan.png
    - Tijani_Mubarak_301915100_P2_Evidence_09_Q09_Plan.png
    - Tijani_Mubarak_301915100_P2_Evidence_10_Q10_Plan.png
+
+================================================================================
+PORTFOLIO 3: TRANSACTIONS AND CONCURRENCY
+================================================================================
+1. Architecture, Analysis & Execution Guide:
+   - Tijani_Mubarak_301915100_P3_ConcurrencyAnalysis.md: In-depth analysis of row-level locking (SELECT FOR UPDATE), deadlock avoidance via deterministic sorting, isolation level semantics (READ COMMITTED vs REPEATABLE READ), and idempotency design.
+   - Tijani_Mubarak_301915100_P3_README.md: Execution order and multi-session concurrency testing instructions.
+
+2. SQL Implementation Scripts:
+   - Tijani_Mubarak_301915100_P3_Setup.sql: Isolated test accounts (Alice, Bob, Charlie) and opening funding.
+   - Tijani_Mubarak_301915100_P3_CommitRollback.sql: Exercise A (atomic commit) & Exercise B (mid-posting deliberate rollback).
+   - Tijani_Mubarak_301915100_P3_InsufficientFunds.sql: Exercise C (overdraft guard & FAILED audit record).
+   - Tijani_Mubarak_301915100_P3_Reversal.sql: Exercise D (compensating journal entries & reversal linking).
+   - Tijani_Mubarak_301915100_P3_Idempotency.sql: Exercise E (duplicate retry deduplication & payload conflict).
+   - Tijani_Mubarak_301915100_P3_ConcurrencyTests.sql: Exercise F & G (race conditions, non-repeatable read, deadlock reproduction and safe ascending lock order).
+
+3. Transaction & Concurrency Visual Evidence (pgAdmin Outputs):
+   - Tijani_Mubarak_301915100_P3_01_setup_opening_balances.png
+   - Tijani_Mubarak_301915100_P3_02a_commit_balances.png
+   - Tijani_Mubarak_301915100_P3_02b_commit_ledger_journal.png
+   - Tijani_Mubarak_301915100_P3_03a_rollback_exception_message.png
+   - Tijani_Mubarak_301915100_P3_03b_rollback_verified_clean.png
+   - Tijani_Mubarak_301915100_P3_04a_attemp_over_limit_transfer.png
+   - Tijani_Mubarak_301915100_P3_04b_verify_alice_balance.png
+   - Tijani_Mubarak_301915100_P3_04c_insufficient_funds_rejection.png
+   - Tijani_Mubarak_301915100_P3_05a_precheck_balance_and_original_transfer.png
+   - Tijani_Mubarak_301915100_P3_05b_execute_reversal.png
+   - Tijani_Mubarak_301915100_P3_05c_verify_restored_balance.png
+   - Tijani_Mubarak_301915100_P3_05d_reversal_transaction_link.png
+   - Tijani_Mubarak_301915100_P3_05e_reversal_ledger_entries.png
+   - Tijani_Mubarak_301915100_P3_06a_initial_transfer_submission_with_idempotency_key.png
+   - Tijani_Mubarak_301915100_P3_06b_simulated_client_retry.png
+   - Tijani_Mubarak_301915100_P3_06c_conflicts_test_same_idempotency_key.png
+   - Tijani_Mubarak_301915100_P3_06d_idempotency_retry_and_conflic.png
+   - Tijani_Mubarak_301915100_P3_07a_begin_transaction_read_initial_balance.png
+   - Tijani_Mubarak_301915100_P3_07b_commit_a_concurrent_update.png
+   - Tijani_Mubarak_301915100_P3_07c_isolation_non_repeatable_read.png
+   - Tijani_Mubarak_301915100_P3_08a_lock_row_then_post_transfer.png
+   - Tijani_Mubarak_301915100_P3_08b_attempt_to_debit_while_locked.png
+   - Tijani_Mubarak_301915100_P3_08c_concurrency_race_no_overdraft.png
+   - Tijani_Mubarak_301915100_P3_09a_reproduce_intentional_lock.png
+   - Tijani_Mubarak_301915100_P3_09b_deadlock_detection_error.png
+   - Tijani_Mubarak_301915100_P3_09c_safe_deterministic_lock_ordering.png
+   - Tijani_Mubarak_301915100_P3_09e_safe_deterministic_lock_ordering_2.png
+   - Tijani_Mubarak_301915100_P3_10_audit_reconciliation_zero_drift.png
