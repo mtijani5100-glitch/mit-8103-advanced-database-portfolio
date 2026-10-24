@@ -14,6 +14,7 @@ This submission folder contains the deliverables and empirical evidence for:
 - Portfolio 1: Database Design and Modelling (7 Marks)
 - Portfolio 2: Query Processing and Optimisation (7 Marks)
 - Portfolio 3: Transactions and Concurrency (7 Marks)
+- Portfolio 4: NoSQL and Advanced Data Models (7 Marks)
 
 All files follow the required naming format: Surname_Firstname_StudentID_DocumentType
 No spaces are used in any file or folder names.
@@ -134,3 +135,30 @@ PORTFOLIO 3: TRANSACTIONS AND CONCURRENCY
    - Tijani_Mubarak_301915100_P3_09c_safe_deterministic_lock_ordering.png
    - Tijani_Mubarak_301915100_P3_09e_safe_deterministic_lock_ordering_2.png
    - Tijani_Mubarak_301915100_P3_10_audit_reconciliation_zero_drift.png
+
+================================================================================
+PORTFOLIO 4: NOSQL AND ADVANCED DATA MODELS
+================================================================================
+1. Architecture, Schema Design & Consistency Analysis:
+   - Tijani_Mubarak_301915100_P4_NoSQLModelDesign.md: JSON Schema validator specifications, embedding vs referencing analysis, anti-pattern avoidance (no unbounded customer event arrays), and index design.
+   - Tijani_Mubarak_301915100_P4_SQLvsNoSQLRationale.md: Comparative matrix, authoritative balance vs event projections, CAP/PACELC theorem evaluation, and Transactional Outbox Pattern design.
+   - Tijani_Mubarak_301915100_P4_README.md: Execution guide and screenshot runbook for mongosh and Node.js test runners.
+
+2. Seed Dataset & Execution Scripts:
+   - Tijani_Mubarak_301915100_P4_Events_Seed.json: 20 synthetic Nigerian fintech transaction events with polymorphic metadata.
+   - Tijani_Mubarak_301915100_P4_01_SetupCollection.js: MongoDB collection creation with $jsonSchema validation and 5 strategic indexes.
+   - Tijani_Mubarak_301915100_P4_02_SeedEvents.js: Document ingestion script with BSON types.
+   - Tijani_Mubarak_301915100_P4_03_QueriesAndAggregations.js: Queries (Q1-Q3) and Aggregation Pipelines (Agg1-Agg3) for customer feeds, lifecycle lookups, failure distribution, channel turnover, and fraud detection.
+   - Tijani_Mubarak_301915100_P4_04_OutboxPattern.js: Transactional outbox idempotent upsert consumer simulation.
+   - Tijani_Mubarak_301915100_P4_RunLab.js: Standalone zero-dependency Node.js execution engine.
+
+3. Visual Execution Evidence:
+   - Tijani_Mubarak_301915100_P4_01_Schema_and_Indexes.png: Schema validator and index creation output.
+   - Tijani_Mubarak_301915100_P4_02_Seed_Documents_Ingested.png: Ingestion confirmation for 20 event documents.
+   - Tijani_Mubarak_301915100_P4_03_Query_Customer_Activity.png: Paginated customer activity feed using idx_customer_timeline.
+   - Tijani_Mubarak_301915100_P4_04_Query_Lifecycle_Lookup.png: Point lookup by transaction_ref showing full lifecycle progression.
+   - Tijani_Mubarak_301915100_P4_05_Query_Failed_Diagnostics.png: Diagnostic filter for failed transfers displaying error codes.
+   - Tijani_Mubarak_301915100_P4_06_Agg_Failure_Distribution.png: Aggregation pipeline grouping failed volume by reason and channel (also available as _06c_).
+   - Tijani_Mubarak_301915100_P4_07_Agg_Channel_Turnover.png: Multi-channel volume, total turnover, and average latency breakdown (stages _07a_, _07b_, _07c_).
+   - Tijani_Mubarak_301915100_P4_08_Agg_Fraud_Security.png: Fraud detection flagging risk scores >= 0.70 and impossible travel anomaly.
+   - Tijani_Mubarak_301915100_P4_09_Outbox_Idempotent_Replay.png: Outbox pattern duplicate delivery rejection proof.
