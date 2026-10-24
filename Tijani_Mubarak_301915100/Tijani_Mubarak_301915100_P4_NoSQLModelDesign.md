@@ -19,7 +19,26 @@ LedgerSpring Digital Bank (LSDB) employs a polyglot persistence architecture:
 
 ---
 
-## 2. Collection Design: `transaction_events`
+## 2. Evaluation of NoSQL Paradigms for LedgerSpring Digital Bank
+
+The NoSQL ecosystem encompasses four distinct data modeling paradigms. Below is an architectural evaluation of each paradigm within the LedgerSpring Digital Bank (LSDB) ecosystem:
+
+| NoSQL Paradigm | Representative Engine | LSDB Architectural Role & Concrete Example | Suitability Evaluation & Trade-offs |
+|---|---|---|---|
+| **1. Document Store** *(Primary Implemented Model)* | **MongoDB 7.0 / BSON** | **Implemented: `transaction_events`**<br>Each document represents a polymorphic financial event containing embedded device telemetry, channel parameters, and NIP clearing metadata linked via `transaction_ref` to PostgreSQL. | **High Suitability for Event Projection:** Absorbs channel-specific polymorphic metadata (GPS from mobile, cell towers from USSD, IP/TLS from web) without relational schema migration. Supports rich secondary indexing and multi-stage aggregation pipelines. |
+| **2. Key-Value Store** | **Redis / AWS DynamoDB** | **Candidate: Session & Idempotency Cache**<br>Key: `idempotency:P3-IDEM-KEY-001`<br>Value: `{ "status": "POSTED", "transaction_id": 1001, "hash": "sha256_payload_hash" }`<br>TTL: 86,400s (24 hours). | **High Suitability for Caching & Token Buckets:** Delivers sub-millisecond point lookups (`O(1)`) for API rate-limiting, user sessions, and rapid duplicate check filtering before hitting PostgreSQL. *Unsuitable* for multi-field analytics or complex querying. |
+| **3. Wide-Column Store** | **Apache Cassandra / ScyllaDB** | **Candidate: Cold Historical Ledger Archival**<br>Partition Key: `account_number`<br>Clustering Column: `occurred_at DESC`<br>Columns: `transaction_id`, `amount_kobo`, `balance_after`, `counterparty_nuban`. | **High Suitability for Append-Only Petabyte Scale:** Linear horizontal write scalability across multiple geographically distributed data centres without single-point bottlenecks. *Unsuitable* for ad-hoc business aggregations or cross-partition relational rollups. |
+| **4. Graph Database** | **Neo4j / Amazon Neptune** | **Candidate: Fraud Ring & AML Syndicate Detection**<br>Nodes: `(:Customer)`, `(:Account)`, `(:Device)`, `(:IP)`<br>Edges: `[:TRANSFERRED_TO]`, `[:LOGGED_IN_FROM]`, `[:SHARED_DEVICE]`. | **High Suitability for Relationship Traversals:** Solves k-hop circular payment detection (mule accounts, loan stacking, smurfing rings: A ➔ B ➔ C ➔ A) in milliseconds, where SQL joins would explode exponentially. *Unsuitable* for core ACID double-entry accounting. |
+
+### Why the Document Model was Selected for Implementation:
+LSDB specifically implemented the **Document Store (MongoDB)** because banking event telemetry requires a combination of:
+1. **Hierarchical, nested data:** Capturing client device details, geo-location, and channel-specific payload attributes in a single atomic document read.
+2. **Polymorphic schema flexibility:** Supporting differing metadata formats across Mobile App, USSD, Web Portal, and NIP Inward channels without sparse, null-heavy relational tables.
+3. **Rich aggregation framework:** Computing failure rates, channel turnover, and fraud velocity natively without requiring specialized graph query engines.
+
+---
+
+## 3. Collection Design: `transaction_events`
 
 The primary MongoDB collection is `transaction_events`. Each document represents a distinct, immutable point-in-time event occurring during a transaction's lifecycle.
 
@@ -113,7 +132,7 @@ A MongoDB collection-level validator ensures document integrity while allowing c
 
 ---
 
-## 3. Embedding vs. Referencing Design Strategy
+## 4. Embedding vs. Referencing Design Strategy
 
 The data model makes deliberate choices between embedding and referencing:
 
@@ -130,7 +149,7 @@ LSDB specifically avoids the anti-pattern of embedding transaction event arrays 
 
 ---
 
-## 4. Indexing Architecture
+## 5. Indexing Architecture
 
 The collection features five strategic indexes tailored to high-frequency query patterns:
 
@@ -168,7 +187,7 @@ db.transaction_events.createIndex(
 
 ---
 
-## 5. Sample Document: Complete Mobile App Transfer Event
+## 6. Sample Document: Complete Mobile App Transfer Event
 
 ```json
 {
